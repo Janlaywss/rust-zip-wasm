@@ -6,6 +6,7 @@ console.log(wasm);
 async function getAsByteArray(file) {
     return new Uint8Array(await readFile(file))
 }
+
 function readFile(file) {
     return new Promise((resolve, reject) => {
         // Create file reader
@@ -32,9 +33,7 @@ async function RustUploadFile() {
     var fileObj = document.getElementById("file").files[0]; // js 获取文件对象
     console.time('rust');
     const u8 = await getAsByteArray(fileObj);
-    const buffer = wasm.new_buffer('zip', 1000000);
-    const zip = new wasm.ZipExtract(u8);
-    await zip.extract();
+    await new wasm.ZipExtract(u8).extract();
     console.timeEnd('rust');
 }
 
