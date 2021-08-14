@@ -1,6 +1,8 @@
 import * as wasm from "hello-wasm-pack";
 import JSZip from 'jszip'
 
+console.log(wasm);
+
 async function getAsByteArray(file) {
     return new Uint8Array(await readFile(file))
 }
@@ -11,7 +13,7 @@ function readFile(file) {
 
         // Register event listeners
         reader.addEventListener("loadend", e => resolve(e.target.result))
-        reader.addEventListener("error", reject)
+        reader.addEventListener("error", reject);
 
         // Read file
         reader.readAsArrayBuffer(file)
@@ -30,7 +32,9 @@ async function RustUploadFile() {
     var fileObj = document.getElementById("file").files[0]; // js 获取文件对象
     console.time('rust');
     const u8 = await getAsByteArray(fileObj);
-    wasm.greet(u8);
+    const buffer = wasm.new_buffer('zip', 1000000);
+    const zip = new wasm.ZipExtract(u8);
+    await zip.extract();
     console.timeEnd('rust');
 }
 
