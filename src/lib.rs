@@ -29,10 +29,16 @@ impl ZipExtract {
 
     pub fn extract(&mut self) {
         for i in 0..self.archive.len() {
-            let mut file = self.archive.by_index(i).unwrap();
+            let file = self.archive.by_index(i).unwrap();
             if file.is_file() {
-                let mut buffer = [0; 10];
-                file.read_exact(&mut buffer).unwrap();
+                log(file.name());
+
+                // let mut buffer = [0; 10];
+                // file.read_exact(&mut buffer).unwrap();
+
+                // let mut contents = String::new();
+                // file.read_to_string(&mut contents).unwrap();
+                // log(&contents);
             }
         }
     }
