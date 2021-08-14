@@ -8,6 +8,14 @@ module.exports = {
     filename: "bootstrap.js",
   },
   mode: "development",
+  module: {
+    rules: [
+      {
+        test: /\.worker\.js$/,
+        use: { loader: "worker-loader" },
+      },
+    ],
+  },
   plugins: [
     new CopyWebpackPlugin(['index.html'])
   ],
